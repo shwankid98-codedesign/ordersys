@@ -4,8 +4,1124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>預約排程系統 - DEMO</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+/* 全域樣式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* 導航欄 */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-logo i {
+    margin-right: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* 主要內容 */
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 頁面切換 */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* 按鈕樣式 */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
+.btn-info {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background: #138496;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: #212529;
+}
+
+.btn-warning:hover {
+    background: #e0a800;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn-full {
+    width: 100%;
+    justify-content: center;
+}
+
+/* 首頁樣式 */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 4rem;
+    padding: 3rem 0;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8rem;
+    color: #667eea;
+    opacity: 0.3;
+}
+
+/* 功能特色 */
+.features-section {
+    margin-bottom: 4rem;
+}
+
+.features-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* 統計數據 */
+.stats-section {
+    margin-bottom: 4rem;
+}
+
+.stats-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    font-size: 3rem;
+    color: #667eea;
+}
+
+.stat-content h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.stat-content p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* 頁面標題 */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* 統計行 */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card-small {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 操作欄 */
+.action-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    margin-left: auto;
+}
+
+.search-box input {
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+/* 預約列表 */
+.bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.booking-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.booking-service {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.booking-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-confirmed {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.booking-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+}
+
+.booking-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* 行事曆 */
+.calendar-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.calendar-day-header {
+    background: #f8f9fa;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+}
+
+.calendar-day {
+    background: white;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-day:hover {
+    background: #f8f9fa;
+}
+
+.calendar-day.active {
+    background: #667eea;
+    color: white;
+}
+
+/* 排程列表 */
+.schedules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.schedule-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.schedule-staff {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.schedule-date {
+    color: #666;
+    font-weight: bold;
+}
+
+.schedule-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.time-slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.status.available {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.unavailable {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status.break {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.schedule-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* 後台管理 */
+.admin-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #eee;
+}
+
+.tab-btn {
+    padding: 1rem 2rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 系統健康狀態 */
+.system-health {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.system-health h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.health-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.health-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.health-icon {
+    font-size: 2rem;
+    color: #28a745;
+}
+
+.health-content h4 {
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+.status-good {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* 最近活動 */
+.recent-activities {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.recent-activities h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.activity-icon {
+    font-size: 1.5rem;
+    color: #667eea;
+}
+
+.activity-content p {
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+.activity-content span {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+/* 使用者表格 */
+.users-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    align-items: center;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-info i {
+    font-size: 1.5rem;
+    color: #667eea;
+}
+
+.user-info div {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info small {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.role-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.role-tag.admin {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.role-tag.staff {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.role-tag.customer {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.status-tag.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-tag.inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* 角色管理 */
+.roles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.role-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.role-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.role-info i {
+    font-size: 2rem;
+    color: #667eea;
+}
+
+.role-info h4 {
+    margin-bottom: 0.25rem;
+    color: #333;
+}
+
+.role-info p {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.role-type {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.role-type.system {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.role-type.custom {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.role-permissions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.permission-tag {
+    padding: 0.25rem 0.75rem;
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 20px;
+    font-size: 0.875rem;
+}
+
+.role-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 系統設定 */
+.settings-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.settings-form h3 {
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+}
+
+/* 登入頁面 */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.login-form {
+    background: white;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header i {
+    font-size: 3rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.login-header h2 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.login-header p {
+    color: #666;
+}
+
+.login-form-content {
+    margin-bottom: 2rem;
+}
+
+.login-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.login-footer p {
+    margin-bottom: 1rem;
+    color: #666;
+    font-weight: bold;
+}
+
+.test-accounts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.account-item {
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* 日期範圍 */
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-range input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        margin-left: 0;
+    }
+    
+    .search-box input {
+        width: 100%;
+    }
+    
+    .booking-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .table-header,
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .admin-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .login-form {
+        padding: 2rem;
+    }
+}
+
+/* Font Awesome 圖標樣式 */
+.fas, .far, .fab {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.fa-home:before { content: "\f015"; }
+.fa-calendar-check:before { content: "\f274"; }
+.fa-clock:before { content: "\f017"; }
+.fa-cog:before { content: "\f013"; }
+.fa-sign-in-alt:before { content: "\f2f6"; }
+.fa-calendar-alt:before { content: "\f073"; }
+.fa-calendar-plus:before { content: "\f271"; }
+.fa-chart-bar:before { content: "\f080"; }
+.fa-users:before { content: "\f0c0"; }
+.fa-bell:before { content: "\f0f3"; }
+.fa-shield-alt:before { content: "\f3ed"; }
+.fa-dollar-sign:before { content: "\f155"; }
+.fa-plus:before { content: "\f067"; }
+.fa-sync:before { content: "\f021"; }
+.fa-search:before { content: "\f002"; }
+.fa-cut:before { content: "\f0c4"; }
+.fa-spa:before { content: "\f5bb"; }
+.fa-magic:before { content: "\f0d0"; }
+.fa-user:before { content: "\f007"; }
+.fa-user-tie:before { content: "\f508"; }
+.fa-chevron-left:before { content: "\f053"; }
+.fa-chevron-right:before { content: "\f054"; }
+.fa-database:before { content: "\f1c0"; }
+.fa-server:before { content: "\f233"; }
+.fa-calendar-plus:before { content: "\f271"; }
+.fa-user-plus:before { content: "\f234"; }
+.fa-check-circle:before { content: "\f058"; }
+    </style>
 </head>
 <body>
     <!-- 導航欄 -->
@@ -803,6 +1919,555 @@
         </section>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+// 全域變數
+let currentUser = null;
+let currentPage = 'home';
+
+// DOM 載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
+
+// 初始化應用程式
+function initializeApp() {
+    setupNavigation();
+    setupEventListeners();
+    setupAnimations();
+    loadDemoData();
+}
+
+// 設置導航功能
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    // 導航連結點擊事件
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.getAttribute('data-page');
+            showPage(page);
+            
+            // 更新導航狀態
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // 手機版導航切換
+    if (navToggle) {
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    }
+}
+
+// 設置事件監聽器
+function setupEventListeners() {
+    // 後台管理標籤切換
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tab = this.getAttribute('data-tab');
+            switchTab(tab);
+            
+            // 更新標籤狀態
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // 登入表單提交
+    const loginForm = document.querySelector('.login-form-content');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+    }
+
+    // 系統設定表單提交
+    const settingsForm = document.querySelector('.settings-form form');
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleSettingsSave();
+        });
+    }
+
+    // 搜尋功能
+    const searchInputs = document.querySelectorAll('.search-box input');
+    searchInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            handleSearch(this.value, this.closest('.page').id);
+        });
+    });
+
+    // 日期範圍選擇
+    const dateInputs = document.querySelectorAll('.date-range input');
+    dateInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            handleDateRangeChange();
+        });
+    });
+
+    // 行事曆日期點擊
+    const calendarDays = document.querySelectorAll('.calendar-day');
+    calendarDays.forEach(day => {
+        day.addEventListener('click', function() {
+            selectCalendarDay(this);
+        });
+    });
+}
+
+// 設置動畫效果
+function setupAnimations() {
+    // 統計數字動畫
+    animateNumbers();
+    
+    // 卡片懸停效果
+    const cards = document.querySelectorAll('.feature-card, .stat-card, .booking-item, .schedule-item');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// 載入演示數據
+function loadDemoData() {
+    // 模擬載入統計數據
+    setTimeout(() => {
+        updateStats();
+    }, 1000);
+
+    // 模擬載入預約數據
+    setTimeout(() => {
+        updateBookings();
+    }, 1500);
+
+    // 模擬載入排程數據
+    setTimeout(() => {
+        updateSchedules();
+    }, 2000);
+}
+
+// 頁面切換功能
+function showPage(pageId) {
+    // 隱藏所有頁面
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
+
+    // 顯示目標頁面
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.add('active');
+        currentPage = pageId;
+        
+        // 頁面特定初始化
+        switch(pageId) {
+            case 'bookings':
+                initializeBookingsPage();
+                break;
+            case 'schedules':
+                initializeSchedulesPage();
+                break;
+            case 'admin':
+                initializeAdminPage();
+                break;
+            case 'login':
+                initializeLoginPage();
+                break;
+        }
+    }
+}
+
+// 標籤切換功能
+function switchTab(tabId) {
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
+}
+
+// 登入處理
+function handleLogin() {
+    const email = document.querySelector('input[type="email"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+
+    // 模擬登入驗證
+    if (email && password) {
+        // 根據不同帳號設定用戶角色
+        let userRole = 'CUSTOMER';
+        if (email.includes('admin')) {
+            userRole = 'ADMIN';
+        } else if (email.includes('staff')) {
+            userRole = 'STAFF';
+        }
+
+        currentUser = {
+            email: email,
+            role: userRole,
+            name: email.split('@')[0]
+        };
+
+        showNotification('登入成功！', 'success');
+        
+        // 根據角色跳轉到相應頁面
+        setTimeout(() => {
+            if (userRole === 'ADMIN' || userRole === 'STAFF') {
+                showPage('admin');
+            } else {
+                showPage('bookings');
+            }
+        }, 1000);
+    } else {
+        showNotification('請輸入完整的登入資訊', 'error');
+    }
+}
+
+// 系統設定儲存
+function handleSettingsSave() {
+    showNotification('設定已儲存！', 'success');
+}
+
+// 搜尋處理
+function handleSearch(query, pageId) {
+    console.log(`在 ${pageId} 頁面搜尋: ${query}`);
+    // 這裡可以實現實際的搜尋邏輯
+}
+
+// 日期範圍變更處理
+function handleDateRangeChange() {
+    const startDate = document.querySelector('.date-range input[type="date"]:first-of-type').value;
+    const endDate = document.querySelector('.date-range input[type="date"]:last-of-type').value;
+    
+    if (startDate && endDate) {
+        console.log(`日期範圍: ${startDate} 至 ${endDate}`);
+        // 這裡可以實現根據日期範圍載入數據的邏輯
+    }
+}
+
+// 行事曆日期選擇
+function selectCalendarDay(dayElement) {
+    // 移除其他日期的 active 類別
+    const allDays = document.querySelectorAll('.calendar-day');
+    allDays.forEach(day => day.classList.remove('active'));
+    
+    // 為選中的日期添加 active 類別
+    dayElement.classList.add('active');
+    
+    // 這裡可以實現根據選中日期載入相應數據的邏輯
+    console.log(`選中日期: ${dayElement.textContent}`);
+}
+
+// 數字動畫
+function animateNumbers() {
+    const numberElements = document.querySelectorAll('.stat-number, .stat-content h3');
+    
+    numberElements.forEach(element => {
+        const finalValue = element.textContent;
+        const numericValue = parseFloat(finalValue.replace(/[^\d.]/g, ''));
+        
+        if (!isNaN(numericValue)) {
+            animateNumber(element, 0, numericValue, 2000, finalValue);
+        }
+    });
+}
+
+// 數字動畫函數
+function animateNumber(element, start, end, duration, originalText) {
+    const startTime = performance.now();
+    const isCurrency = originalText.includes('$');
+    const isPercentage = originalText.includes('%');
+    
+    function updateNumber(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const current = start + (end - start) * progress;
+        let displayValue;
+        
+        if (isCurrency) {
+            displayValue = `$${Math.floor(current).toLocaleString()}`;
+        } else if (isPercentage) {
+            displayValue = `${current.toFixed(1)}%`;
+        } else {
+            displayValue = Math.floor(current).toLocaleString();
+        }
+        
+        element.textContent = displayValue;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+        }
+    }
+    
+    requestAnimationFrame(updateNumber);
+}
+
+// 更新統計數據
+function updateStats() {
+    // 模擬數據更新
+    const stats = {
+        totalUsers: Math.floor(Math.random() * 200) + 100,
+        totalBookings: Math.floor(Math.random() * 2000) + 1000,
+        todayBookings: Math.floor(Math.random() * 50) + 20,
+        totalRevenue: Math.floor(Math.random() * 100000) + 30000
+    };
+
+    // 更新首頁統計
+    const totalUsersEl = document.getElementById('totalUsers');
+    const totalBookingsEl = document.getElementById('totalBookings');
+    const todayBookingsEl = document.getElementById('todayBookings');
+    const totalRevenueEl = document.getElementById('totalRevenue');
+
+    if (totalUsersEl) totalUsersEl.textContent = stats.totalUsers;
+    if (totalBookingsEl) totalBookingsEl.textContent = stats.totalBookings;
+    if (todayBookingsEl) todayBookingsEl.textContent = stats.todayBookings;
+    if (totalRevenueEl) totalRevenueEl.textContent = `$${stats.totalRevenue.toLocaleString()}`;
+}
+
+// 更新預約數據
+function updateBookings() {
+    // 模擬預約狀態更新
+    const bookingItems = document.querySelectorAll('.booking-item');
+    bookingItems.forEach((item, index) => {
+        // 隨機更新一些預約狀態
+        if (Math.random() > 0.7) {
+            const statusElement = item.querySelector('.booking-status');
+            const actions = item.querySelector('.booking-actions');
+            
+            if (statusElement && actions) {
+                // 模擬狀態變更
+                const statuses = ['status-pending', 'status-confirmed', 'status-completed'];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                statusElement.className = `booking-status ${randomStatus}`;
+                statusElement.textContent = getStatusText(randomStatus);
+            }
+        }
+    });
+}
+
+// 更新排程數據
+function updateSchedules() {
+    // 模擬排程更新
+    const scheduleItems = document.querySelectorAll('.schedule-item');
+    scheduleItems.forEach((item, index) => {
+        // 隨機更新一些時段狀態
+        const timeSlots = item.querySelectorAll('.time-slot .status');
+        timeSlots.forEach(slot => {
+            if (Math.random() > 0.8) {
+                const statuses = ['available', 'unavailable', 'break'];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                slot.className = `status ${randomStatus}`;
+                slot.textContent = getScheduleStatusText(randomStatus);
+            }
+        });
+    });
+}
+
+// 獲取狀態文字
+function getStatusText(statusClass) {
+    const statusMap = {
+        'status-pending': '待確認',
+        'status-confirmed': '已確認',
+        'status-completed': '已完成',
+        'status-cancelled': '已取消'
+    };
+    return statusMap[statusClass] || '未知狀態';
+}
+
+// 獲取排程狀態文字
+function getScheduleStatusText(status) {
+    const statusMap = {
+        'available': '可預約',
+        'unavailable': '不可預約',
+        'break': '休息時間'
+    };
+    return statusMap[status] || '未知狀態';
+}
+
+// 顯示通知
+function showNotification(message, type = 'info') {
+    // 創建通知元素
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${getNotificationIcon(type)}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+    // 添加樣式
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${getNotificationColor(type)};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    `;
+
+    // 添加到頁面
+    document.body.appendChild(notification);
+
+    // 顯示動畫
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    // 自動隱藏
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
+}
+
+// 獲取通知圖標
+function getNotificationIcon(type) {
+    const iconMap = {
+        'success': 'check-circle',
+        'error': 'exclamation-circle',
+        'warning': 'exclamation-triangle',
+        'info': 'info-circle'
+    };
+    return iconMap[type] || 'info-circle';
+}
+
+// 獲取通知顏色
+function getNotificationColor(type) {
+    const colorMap = {
+        'success': '#28a745',
+        'error': '#dc3545',
+        'warning': '#ffc107',
+        'info': '#17a2b8'
+    };
+    return colorMap[type] || '#17a2b8';
+}
+
+// 頁面特定初始化函數
+function initializeBookingsPage() {
+    console.log('初始化預約管理頁面');
+    // 這裡可以添加預約頁面特定的初始化邏輯
+}
+
+function initializeSchedulesPage() {
+    console.log('初始化排程管理頁面');
+    // 這裡可以添加排程頁面特定的初始化邏輯
+}
+
+function initializeAdminPage() {
+    console.log('初始化後台管理頁面');
+    // 這裡可以添加後台管理頁面特定的初始化邏輯
+}
+
+function initializeLoginPage() {
+    console.log('初始化登入頁面');
+    // 這裡可以添加登入頁面特定的初始化邏輯
+}
+
+// 工具函數：格式化日期
+function formatDate(date) {
+    return new Date(date).toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+}
+
+// 工具函數：格式化時間
+function formatTime(time) {
+    return new Date(time).toLocaleTimeString('zh-TW', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+// 工具函數：防抖函數
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 工具函數：節流函數
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// 模擬 API 調用
+function mockApiCall(endpoint, data = {}) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            // 模擬不同的 API 回應
+            let response;
+            switch(endpoint) {
+                case '/api/bookings':
+                    response = { bookings: [], total: 0 };
+                    break;
+                case '/api/schedules':
+                    response = { schedules: [], total: 0 };
+                    break;
+                case '/api/users':
+                    response = { users: [], total: 0 };
+                    break;
+                default:
+                    response = { success: true };
+            }
+            resolve(response);
+        }, Math.random() * 1000 + 500); // 模擬網路延遲
+    });
+}
+
+// 錯誤處理
+function handleError(error, context = '') {
+    console.error(`錯誤 ${context}:`, error);
+    showNotification(`發生錯誤: ${error.message}`, 'error');
+}
+
+// 導出函數供全域使用
+window.showPage = showPage;
+window.switchTab = switchTab;
+window.showNotification = showNotification;
+    </script>
 </body>
 </html>
