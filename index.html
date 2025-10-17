@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>記帳系統 DEMO - 財務管理平台</title>
+    <title>預約排程系統 - DEMO</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -11,597 +11,798 @@
     <!-- 導航欄 -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-brand">
-                <i class="fas fa-calculator"></i>
-                <span>記帳系統 DEMO</span>
+            <div class="nav-logo">
+                <i class="fas fa-calendar-alt"></i>
+                <span>預約排程系統</span>
             </div>
             <div class="nav-menu">
-                <a href="#dashboard" class="nav-link active" data-section="dashboard">
-                    <i class="fas fa-tachometer-alt"></i> 儀表板
+                <a href="#home" class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i> 首頁
                 </a>
-                <a href="#transactions" class="nav-link" data-section="transactions">
-                    <i class="fas fa-exchange-alt"></i> 交易記錄
+                <a href="#bookings" class="nav-link" data-page="bookings">
+                    <i class="fas fa-calendar-check"></i> 預約管理
                 </a>
-                <a href="#accounts" class="nav-link" data-section="accounts">
-                    <i class="fas fa-wallet"></i> 帳戶管理
+                <a href="#schedules" class="nav-link" data-page="schedules">
+                    <i class="fas fa-clock"></i> 排程管理
                 </a>
-                <a href="#categories" class="nav-link" data-section="categories">
-                    <i class="fas fa-tags"></i> 分類管理
+                <a href="#admin" class="nav-link" data-page="admin">
+                    <i class="fas fa-cog"></i> 後台管理
                 </a>
-                <a href="#reports" class="nav-link" data-section="reports">
-                    <i class="fas fa-chart-bar"></i> 報表分析
-                </a>
-                <a href="#budgets" class="nav-link" data-section="budgets">
-                    <i class="fas fa-piggy-bank"></i> 預算管理
+                <a href="#login" class="nav-link" data-page="login">
+                    <i class="fas fa-sign-in-alt"></i> 登入
                 </a>
             </div>
-            <div class="nav-user">
-                <span class="user-info">
-                    <i class="fas fa-user"></i>
-                    <span>DEMO 用戶</span>
-                </span>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
     <!-- 主要內容區域 -->
     <main class="main-content">
-        <!-- 儀表板頁面 -->
-        <section id="dashboard" class="page active">
-            <div class="page-header">
-                <h1><i class="fas fa-tachometer-alt"></i> 財務儀表板</h1>
-                <p>掌控您的財務狀況，實現財務自由</p>
-            </div>
-
-            <!-- 財務統計卡片 -->
-            <div class="stats-grid">
-                <div class="stat-card income">
-                    <div class="stat-icon">
-                        <i class="fas fa-arrow-up"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>總收入</h3>
-                        <p class="stat-value">NT$ 125,000</p>
-                        <span class="stat-change positive">+12.5%</span>
+        <!-- 首頁 -->
+        <section id="home" class="page active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1>預約排程系統</h1>
+                    <p>現代化的預約管理解決方案，讓您的業務更加高效</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="showPage('bookings')">
+                            <i class="fas fa-calendar-plus"></i> 立即預約
+                        </button>
+                        <button class="btn btn-secondary" onclick="showPage('admin')">
+                            <i class="fas fa-chart-bar"></i> 查看統計
+                        </button>
                     </div>
                 </div>
-
-                <div class="stat-card expense">
-                    <div class="stat-icon">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>總支出</h3>
-                        <p class="stat-value">NT$ 78,500</p>
-                        <span class="stat-change negative">+8.2%</span>
-                    </div>
-                </div>
-
-                <div class="stat-card balance">
-                    <div class="stat-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>淨收入</h3>
-                        <p class="stat-value">NT$ 46,500</p>
-                        <span class="stat-change positive">+15.3%</span>
-                    </div>
-                </div>
-
-                <div class="stat-card transactions">
-                    <div class="stat-icon">
-                        <i class="fas fa-list"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>交易筆數</h3>
-                        <p class="stat-value">156</p>
-                        <span class="stat-change positive">+23</span>
-                    </div>
+                <div class="hero-image">
+                    <i class="fas fa-calendar-alt"></i>
                 </div>
             </div>
 
-            <!-- 最近交易 -->
-            <div class="dashboard-section">
-                <h2><i class="fas fa-clock"></i> 最近交易</h2>
-                <div class="recent-transactions">
-                    <div class="transaction-item">
-                        <div class="transaction-icon income">
-                            <i class="fas fa-arrow-up"></i>
+            <!-- 功能特色 -->
+            <div class="features-section">
+                <h2>系統功能特色</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
                         </div>
-                        <div class="transaction-details">
-                            <h4>薪資收入</h4>
-                            <p>銀行帳戶 • 2025/01/15 09:30</p>
-                        </div>
-                        <div class="transaction-amount positive">+NT$ 45,000</div>
+                        <h3>使用者管理</h3>
+                        <p>支援多角色權限管理，包含管理員、員工、客戶三種角色</p>
                     </div>
-
-                    <div class="transaction-item">
-                        <div class="transaction-icon expense">
-                            <i class="fas fa-arrow-down"></i>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
                         </div>
-                        <div class="transaction-details">
-                            <h4>超市購物</h4>
-                            <p>信用卡 • 2025/01/14 18:45</p>
-                        </div>
-                        <div class="transaction-amount negative">-NT$ 2,350</div>
+                        <h3>預約管理</h3>
+                        <p>完整的預約生命週期管理，從建立到完成的全流程追蹤</p>
                     </div>
-
-                    <div class="transaction-item">
-                        <div class="transaction-icon expense">
-                            <i class="fas fa-arrow-down"></i>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
                         </div>
-                        <div class="transaction-details">
-                            <h4>房租</h4>
-                            <p>銀行帳戶 • 2025/01/10 10:00</p>
-                        </div>
-                        <div class="transaction-amount negative">-NT$ 15,000</div>
+                        <h3>排程管理</h3>
+                        <p>靈活的時段設定，支援自動時段產生和手動調整</p>
                     </div>
-
-                    <div class="transaction-item">
-                        <div class="transaction-icon transfer">
-                            <i class="fas fa-exchange-alt"></i>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
                         </div>
-                        <div class="transaction-details">
-                            <h4>轉帳到儲蓄帳戶</h4>
-                            <p>銀行帳戶 → 儲蓄帳戶 • 2025/01/08 14:20</p>
+                        <h3>通知系統</h3>
+                        <p>Email 和系統內通知，確保重要訊息及時傳達</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
                         </div>
-                        <div class="transaction-amount neutral">NT$ 10,000</div>
+                        <h3>報表分析</h3>
+                        <p>詳細的統計報表，幫助您了解業務狀況和趨勢</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>權限控制</h3>
+                        <p>細緻的權限管理，確保資料安全和操作規範</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 快速操作 -->
-            <div class="dashboard-section">
-                <h2><i class="fas fa-bolt"></i> 快速操作</h2>
-                <div class="quick-actions">
-                    <button class="action-btn" onclick="showModal('addTransaction')">
-                        <i class="fas fa-plus"></i>
-                        <span>新增交易</span>
-                    </button>
-                    <button class="action-btn" onclick="showModal('addAccount')">
-                        <i class="fas fa-wallet"></i>
-                        <span>新增帳戶</span>
-                    </button>
-                    <button class="action-btn" onclick="showModal('addCategory')">
-                        <i class="fas fa-tag"></i>
-                        <span>新增分類</span>
-                    </button>
-                    <button class="action-btn" onclick="showModal('addBudget')">
-                        <i class="fas fa-piggy-bank"></i>
-                        <span>設定預算</span>
-                    </button>
+            <!-- 統計數據 -->
+            <div class="stats-section">
+                <h2>系統統計</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalUsers">156</h3>
+                            <p>總使用者</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalBookings">1,234</h3>
+                            <p>總預約</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="todayBookings">28</h3>
+                            <p>今日預約</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalRevenue">$45,678</h3>
+                            <p>總收入</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 交易記錄頁面 -->
-        <section id="transactions" class="page">
+        <!-- 預約管理頁面 -->
+        <section id="bookings" class="page">
             <div class="page-header">
-                <h1><i class="fas fa-exchange-alt"></i> 交易記錄</h1>
-                <button class="btn btn-primary" onclick="showModal('addTransaction')">
-                    <i class="fas fa-plus"></i> 新增交易
+                <h2><i class="fas fa-calendar-check"></i> 預約管理</h2>
+                <p>管理所有預約記錄和狀態</p>
+            </div>
+
+            <!-- 統計卡片 -->
+            <div class="stats-row">
+                <div class="stat-card-small">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">待確認</div>
+                </div>
+                <div class="stat-card-small">
+                    <div class="stat-number">123</div>
+                    <div class="stat-label">已確認</div>
+                </div>
+                <div class="stat-card-small">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">已完成</div>
+                </div>
+                <div class="stat-card-small">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">已取消</div>
+                </div>
+            </div>
+
+            <!-- 操作按鈕 -->
+            <div class="action-bar">
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> 新增預約
                 </button>
-            </div>
-
-            <!-- 篩選器 -->
-            <div class="filters">
-                <select class="filter-select">
-                    <option value="">所有類型</option>
-                    <option value="income">收入</option>
-                    <option value="expense">支出</option>
-                    <option value="transfer">轉帳</option>
-                </select>
-                <select class="filter-select">
-                    <option value="">所有帳戶</option>
-                    <option value="bank">銀行帳戶</option>
-                    <option value="credit">信用卡</option>
-                    <option value="cash">現金</option>
-                </select>
-                <input type="date" class="filter-input" placeholder="開始日期">
-                <input type="date" class="filter-input" placeholder="結束日期">
-                <button class="btn btn-secondary">篩選</button>
-            </div>
-
-            <!-- 交易列表 -->
-            <div class="transactions-list">
-                <div class="transaction-row">
-                    <div class="transaction-type income">
-                        <i class="fas fa-arrow-up"></i>
-                    </div>
-                    <div class="transaction-info">
-                        <h4>薪資收入</h4>
-                        <p>銀行帳戶 • 薪資</p>
-                    </div>
-                    <div class="transaction-date">2025/01/15</div>
-                    <div class="transaction-amount positive">+NT$ 45,000</div>
-                    <div class="transaction-actions">
-                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-
-                <div class="transaction-row">
-                    <div class="transaction-type expense">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <div class="transaction-info">
-                        <h4>超市購物</h4>
-                        <p>信用卡 • 生活用品</p>
-                    </div>
-                    <div class="transaction-date">2025/01/14</div>
-                    <div class="transaction-amount negative">-NT$ 2,350</div>
-                    <div class="transaction-actions">
-                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-
-                <div class="transaction-row">
-                    <div class="transaction-type expense">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <div class="transaction-info">
-                        <h4>房租</h4>
-                        <p>銀行帳戶 • 居住</p>
-                    </div>
-                    <div class="transaction-date">2025/01/10</div>
-                    <div class="transaction-amount negative">-NT$ 15,000</div>
-                    <div class="transaction-actions">
-                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-
-                <div class="transaction-row">
-                    <div class="transaction-type transfer">
-                        <i class="fas fa-exchange-alt"></i>
-                    </div>
-                    <div class="transaction-info">
-                        <h4>轉帳到儲蓄帳戶</h4>
-                        <p>銀行帳戶 → 儲蓄帳戶</p>
-                    </div>
-                    <div class="transaction-date">2025/01/08</div>
-                    <div class="transaction-amount neutral">NT$ 10,000</div>
-                    <div class="transaction-actions">
-                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 帳戶管理頁面 -->
-        <section id="accounts" class="page">
-            <div class="page-header">
-                <h1><i class="fas fa-wallet"></i> 帳戶管理</h1>
-                <button class="btn btn-primary" onclick="showModal('addAccount')">
-                    <i class="fas fa-plus"></i> 新增帳戶
+                <button class="btn btn-secondary">
+                    <i class="fas fa-sync"></i> 重新整理
                 </button>
+                <div class="search-box">
+                    <input type="text" placeholder="搜尋預約...">
+                    <i class="fas fa-search"></i>
+                </div>
             </div>
 
-            <div class="accounts-grid">
-                <div class="account-card">
-                    <div class="account-header">
-                        <div class="account-icon bank">
-                            <i class="fas fa-university"></i>
+            <!-- 預約列表 -->
+            <div class="bookings-list">
+                <div class="booking-item">
+                    <div class="booking-header">
+                        <div class="booking-service">
+                            <i class="fas fa-cut"></i>
+                            <span>美髮服務</span>
                         </div>
-                        <div class="account-info">
-                            <h3>銀行帳戶</h3>
-                            <p>主要銀行帳戶</p>
+                        <div class="booking-status status-pending">待確認</div>
+                    </div>
+                    <div class="booking-details">
+                        <div class="detail-row">
+                            <i class="fas fa-user"></i>
+                            <span>客戶：張小明</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-user-tie"></i>
+                            <span>服務人員：李美髮師</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-clock"></i>
+                            <span>時間：2024-01-15 14:00</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>金額：$800</span>
                         </div>
                     </div>
-                    <div class="account-balance">
-                        <span class="balance-label">餘額</span>
-                        <span class="balance-amount">NT$ 125,000</span>
-                    </div>
-                    <div class="account-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
-                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    <div class="booking-actions">
+                        <button class="btn btn-sm btn-success">確認</button>
+                        <button class="btn btn-sm btn-info">查看詳情</button>
+                        <button class="btn btn-sm btn-danger">取消</button>
                     </div>
                 </div>
 
-                <div class="account-card">
-                    <div class="account-header">
-                        <div class="account-icon credit">
-                            <i class="fas fa-credit-card"></i>
+                <div class="booking-item">
+                    <div class="booking-header">
+                        <div class="booking-service">
+                            <i class="fas fa-spa"></i>
+                            <span>美容護理</span>
                         </div>
-                        <div class="account-info">
-                            <h3>信用卡</h3>
-                            <p>主要信用卡</p>
+                        <div class="booking-status status-confirmed">已確認</div>
+                    </div>
+                    <div class="booking-details">
+                        <div class="detail-row">
+                            <i class="fas fa-user"></i>
+                            <span>客戶：王小華</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-user-tie"></i>
+                            <span>服務人員：陳美容師</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-clock"></i>
+                            <span>時間：2024-01-15 16:00</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>金額：$1,200</span>
                         </div>
                     </div>
-                    <div class="account-balance">
-                        <span class="balance-label">可用額度</span>
-                        <span class="balance-amount">NT$ 45,000</span>
-                    </div>
-                    <div class="account-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
-                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    <div class="booking-actions">
+                        <button class="btn btn-sm btn-primary">完成交易</button>
+                        <button class="btn btn-sm btn-info">查看詳情</button>
+                        <button class="btn btn-sm btn-danger">取消</button>
                     </div>
                 </div>
 
-                <div class="account-card">
-                    <div class="account-header">
-                        <div class="account-icon savings">
-                            <i class="fas fa-piggy-bank"></i>
+                <div class="booking-item">
+                    <div class="booking-header">
+                        <div class="booking-service">
+                            <i class="fas fa-magic"></i>
+                            <span>美甲服務</span>
                         </div>
-                        <div class="account-info">
-                            <h3>儲蓄帳戶</h3>
-                            <p>定期儲蓄</p>
+                        <div class="booking-status status-completed">已完成</div>
+                    </div>
+                    <div class="booking-details">
+                        <div class="detail-row">
+                            <i class="fas fa-user"></i>
+                            <span>客戶：林小美</span>
                         </div>
-                    </div>
-                    <div class="account-balance">
-                        <span class="balance-label">餘額</span>
-                        <span class="balance-amount">NT$ 50,000</span>
-                    </div>
-                    <div class="account-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
-                        <button class="btn btn-sm btn-primary">查看詳情</button>
-                    </div>
-                </div>
-
-                <div class="account-card">
-                    <div class="account-header">
-                        <div class="account-icon cash">
-                            <i class="fas fa-money-bill-wave"></i>
+                        <div class="detail-row">
+                            <i class="fas fa-user-tie"></i>
+                            <span>服務人員：黃美甲師</span>
                         </div>
-                        <div class="account-info">
-                            <h3>現金</h3>
-                            <p>日常現金</p>
+                        <div class="detail-row">
+                            <i class="fas fa-clock"></i>
+                            <span>時間：2024-01-15 10:00</span>
+                        </div>
+                        <div class="detail-row">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>金額：$600</span>
                         </div>
                     </div>
-                    <div class="account-balance">
-                        <span class="balance-label">餘額</span>
-                        <span class="balance-amount">NT$ 5,000</span>
-                    </div>
-                    <div class="account-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
-                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    <div class="booking-actions">
+                        <button class="btn btn-sm btn-info">查看詳情</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 分類管理頁面 -->
-        <section id="categories" class="page">
+        <!-- 排程管理頁面 -->
+        <section id="schedules" class="page">
             <div class="page-header">
-                <h1><i class="fas fa-tags"></i> 分類管理</h1>
-                <button class="btn btn-primary" onclick="showModal('addCategory')">
-                    <i class="fas fa-plus"></i> 新增分類
+                <h2><i class="fas fa-clock"></i> 排程管理</h2>
+                <p>管理員工工作排程和可預約時段</p>
+            </div>
+
+            <!-- 操作區域 -->
+            <div class="action-bar">
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> 新增排程
                 </button>
-            </div>
-
-            <div class="categories-section">
-                <h3>收入分類</h3>
-                <div class="categories-grid">
-                    <div class="category-card income">
-                        <div class="category-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        <div class="category-info">
-                            <h4>薪資</h4>
-                            <p>15 筆交易</p>
-                        </div>
-                        <div class="category-amount">NT$ 45,000</div>
-                    </div>
-
-                    <div class="category-card income">
-                        <div class="category-icon">
-                            <i class="fas fa-gift"></i>
-                        </div>
-                        <div class="category-info">
-                            <h4>獎金</h4>
-                            <p>3 筆交易</p>
-                        </div>
-                        <div class="category-amount">NT$ 12,000</div>
-                    </div>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-sync"></i> 重新整理
+                </button>
+                <div class="date-range">
+                    <input type="date" value="2024-01-15">
+                    <span>至</span>
+                    <input type="date" value="2024-01-21">
                 </div>
             </div>
 
-            <div class="categories-section">
-                <h3>支出分類</h3>
-                <div class="categories-grid">
-                    <div class="category-card expense">
-                        <div class="category-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="category-info">
-                            <h4>居住</h4>
-                            <p>8 筆交易</p>
-                        </div>
-                        <div class="category-amount">NT$ 15,000</div>
-                    </div>
+            <!-- 行事曆 -->
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="btn btn-sm"><i class="fas fa-chevron-left"></i></button>
+                    <h3>2024年1月</h3>
+                    <button class="btn btn-sm"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">日</div>
+                    <div class="calendar-day-header">一</div>
+                    <div class="calendar-day-header">二</div>
+                    <div class="calendar-day-header">三</div>
+                    <div class="calendar-day-header">四</div>
+                    <div class="calendar-day-header">五</div>
+                    <div class="calendar-day-header">六</div>
+                    
+                    <!-- 日曆天數 -->
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day active">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                </div>
+            </div>
 
-                    <div class="category-card expense">
-                        <div class="category-icon">
-                            <i class="fas fa-utensils"></i>
+            <!-- 排程列表 -->
+            <div class="schedules-list">
+                <div class="schedule-item">
+                    <div class="schedule-header">
+                        <div class="schedule-staff">
+                            <i class="fas fa-user-tie"></i>
+                            <span>李美髮師</span>
                         </div>
-                        <div class="category-info">
-                            <h4>餐飲</h4>
-                            <p>25 筆交易</p>
-                        </div>
-                        <div class="category-amount">NT$ 8,500</div>
+                        <div class="schedule-date">2024-01-15</div>
                     </div>
-
-                    <div class="category-card expense">
-                        <div class="category-icon">
-                            <i class="fas fa-shopping-cart"></i>
+                    <div class="schedule-details">
+                        <div class="time-slot">
+                            <span class="time">09:00 - 12:00</span>
+                            <span class="status available">可預約</span>
                         </div>
-                        <div class="category-info">
-                            <h4>生活用品</h4>
-                            <p>12 筆交易</p>
+                        <div class="time-slot">
+                            <span class="time">14:00 - 18:00</span>
+                            <span class="status available">可預約</span>
                         </div>
-                        <div class="category-amount">NT$ 3,200</div>
                     </div>
+                    <div class="schedule-actions">
+                        <button class="btn btn-sm btn-primary">編輯</button>
+                        <button class="btn btn-sm btn-info">產生時段</button>
+                        <button class="btn btn-sm btn-danger">刪除</button>
+                    </div>
+                </div>
 
-                    <div class="category-card expense">
-                        <div class="category-icon">
-                            <i class="fas fa-car"></i>
+                <div class="schedule-item">
+                    <div class="schedule-header">
+                        <div class="schedule-staff">
+                            <i class="fas fa-user-tie"></i>
+                            <span>陳美容師</span>
                         </div>
-                        <div class="category-info">
-                            <h4>交通</h4>
-                            <p>18 筆交易</p>
+                        <div class="schedule-date">2024-01-15</div>
+                    </div>
+                    <div class="schedule-details">
+                        <div class="time-slot">
+                            <span class="time">10:00 - 12:00</span>
+                            <span class="status break">休息時間</span>
                         </div>
-                        <div class="category-amount">NT$ 2,800</div>
+                        <div class="time-slot">
+                            <span class="time">13:00 - 17:00</span>
+                            <span class="status available">可預約</span>
+                        </div>
+                    </div>
+                    <div class="schedule-actions">
+                        <button class="btn btn-sm btn-primary">編輯</button>
+                        <button class="btn btn-sm btn-info">產生時段</button>
+                        <button class="btn btn-sm btn-danger">刪除</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 報表分析頁面 -->
-        <section id="reports" class="page">
+        <!-- 後台管理頁面 -->
+        <section id="admin" class="page">
             <div class="page-header">
-                <h1><i class="fas fa-chart-bar"></i> 報表分析</h1>
-                <div class="report-controls">
-                    <select class="filter-select">
-                        <option value="month">本月</option>
-                        <option value="quarter">本季</option>
-                        <option value="year">本年</option>
-                    </select>
+                <h2><i class="fas fa-cog"></i> 後台管理</h2>
+                <p>系統管理、使用者權限控制和營運監控</p>
+            </div>
+
+            <!-- 管理標籤 -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="dashboard">儀表板</button>
+                <button class="tab-btn" data-tab="users">使用者管理</button>
+                <button class="tab-btn" data-tab="roles">角色管理</button>
+                <button class="tab-btn" data-tab="settings">系統設定</button>
+            </div>
+
+            <!-- 儀表板標籤內容 -->
+            <div id="dashboard" class="tab-content active">
+                <!-- 統計卡片 -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>156</h3>
+                            <p>總使用者</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>12</h3>
+                            <p>總員工</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>1,234</h3>
+                            <p>總預約</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>$45,678</h3>
+                            <p>總收入</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 系統健康狀態 -->
+                <div class="system-health">
+                    <h3>系統健康狀態</h3>
+                    <div class="health-grid">
+                        <div class="health-item">
+                            <div class="health-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="health-content">
+                                <h4>資料庫狀態</h4>
+                                <span class="status-good">正常</span>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="health-content">
+                                <h4>API 狀態</h4>
+                                <span class="status-good">正常</span>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="health-content">
+                                <h4>正常運行時間</h4>
+                                <span class="status-good">99.8%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 最近活動 -->
+                <div class="recent-activities">
+                    <h3>最近活動</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>張小明</strong> 預約了 <strong>美髮服務</strong></p>
+                                <span>2024-01-15 14:00</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>新用戶註冊</strong> - 王小華</p>
+                                <span>2024-01-15 13:30</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>預約完成</strong> - 林小美的美甲服務</p>
+                                <span>2024-01-15 12:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 使用者管理標籤內容 -->
+            <div id="users" class="tab-content">
+                <div class="action-bar">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> 新增使用者
+                    </button>
                     <button class="btn btn-secondary">
-                        <i class="fas fa-download"></i> 匯出報表
+                        <i class="fas fa-sync"></i> 重新整理
                     </button>
+                    <div class="search-box">
+                        <input type="text" placeholder="搜尋使用者...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <div class="users-table">
+                    <div class="table-header">
+                        <div class="col">使用者</div>
+                        <div class="col">角色</div>
+                        <div class="col">狀態</div>
+                        <div class="col">註冊時間</div>
+                        <div class="col">操作</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="col">
+                            <div class="user-info">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <div>張小明</div>
+                                    <small>zhang@example.com</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <span class="role-tag customer">客戶</span>
+                        </div>
+                        <div class="col">
+                            <span class="status-tag active">啟用</span>
+                        </div>
+                        <div class="col">2024-01-10</div>
+                        <div class="col">
+                            <button class="btn btn-sm btn-info">查看</button>
+                            <button class="btn btn-sm btn-primary">編輯</button>
+                            <button class="btn btn-sm btn-warning">權限</button>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="col">
+                            <div class="user-info">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <div>李美髮師</div>
+                                    <small>li@example.com</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <span class="role-tag staff">員工</span>
+                        </div>
+                        <div class="col">
+                            <span class="status-tag active">啟用</span>
+                        </div>
+                        <div class="col">2024-01-08</div>
+                        <div class="col">
+                            <button class="btn btn-sm btn-info">查看</button>
+                            <button class="btn btn-sm btn-primary">編輯</button>
+                            <button class="btn btn-sm btn-warning">權限</button>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="col">
+                            <div class="user-info">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <div>管理員</div>
+                                    <small>admin@ordersys.com</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <span class="role-tag admin">管理員</span>
+                        </div>
+                        <div class="col">
+                            <span class="status-tag active">啟用</span>
+                        </div>
+                        <div class="col">2024-01-01</div>
+                        <div class="col">
+                            <button class="btn btn-sm btn-info">查看</button>
+                            <button class="btn btn-sm btn-primary">編輯</button>
+                            <button class="btn btn-sm btn-warning">權限</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="reports-grid">
-                <div class="report-card">
-                    <h3>收支趨勢</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-line"></i>
-                        <p>收支趨勢圖表</p>
-                    </div>
+            <!-- 角色管理標籤內容 -->
+            <div id="roles" class="tab-content">
+                <div class="action-bar">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> 新增角色
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-sync"></i> 重新整理
+                    </button>
                 </div>
 
-                <div class="report-card">
-                    <h3>支出分類分析</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-pie"></i>
-                        <p>支出分類圓餅圖</p>
+                <div class="roles-list">
+                    <div class="role-item">
+                        <div class="role-header">
+                            <div class="role-info">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <h4>管理員</h4>
+                                    <p>擁有所有權限</p>
+                                </div>
+                            </div>
+                            <span class="role-type system">系統角色</span>
+                        </div>
+                        <div class="role-permissions">
+                            <span class="permission-tag">系統管理</span>
+                            <span class="permission-tag">使用者管理</span>
+                            <span class="permission-tag">預約管理</span>
+                            <span class="permission-tag">報表查看</span>
+                        </div>
+                        <div class="role-actions">
+                            <button class="btn btn-sm btn-primary">編輯</button>
+                            <button class="btn btn-sm btn-danger">刪除</button>
+                        </div>
+                    </div>
+
+                    <div class="role-item">
+                        <div class="role-header">
+                            <div class="role-info">
+                                <i class="fas fa-user-tie"></i>
+                                <div>
+                                    <h4>員工</h4>
+                                    <p>可以管理預約和時段</p>
+                                </div>
+                            </div>
+                            <span class="role-type system">系統角色</span>
+                        </div>
+                        <div class="role-permissions">
+                            <span class="permission-tag">預約管理</span>
+                            <span class="permission-tag">時段管理</span>
+                            <span class="permission-tag">報表查看</span>
+                        </div>
+                        <div class="role-actions">
+                            <button class="btn btn-sm btn-primary">編輯</button>
+                            <button class="btn btn-sm btn-danger">刪除</button>
+                        </div>
+                    </div>
+
+                    <div class="role-item">
+                        <div class="role-header">
+                            <div class="role-info">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h4>客戶</h4>
+                                    <p>只能查看自己的預約</p>
+                                </div>
+                            </div>
+                            <span class="role-type system">系統角色</span>
+                        </div>
+                        <div class="role-permissions">
+                            <span class="permission-tag">預約查看</span>
+                        </div>
+                        <div class="role-actions">
+                            <button class="btn btn-sm btn-primary">編輯</button>
+                            <button class="btn btn-sm btn-danger">刪除</button>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="report-card">
-                    <h3>月度比較</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-bar"></i>
-                        <p>月度比較柱狀圖</p>
-                    </div>
-                </div>
-
-                <div class="report-card">
-                    <h3>帳戶餘額變化</h3>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-area"></i>
-                        <p>帳戶餘額變化圖</p>
-                    </div>
+            <!-- 系統設定標籤內容 -->
+            <div id="settings" class="tab-content">
+                <div class="settings-form">
+                    <h3>系統設定</h3>
+                    <form>
+                        <div class="form-group">
+                            <label>系統名稱</label>
+                            <input type="text" value="預約排程系統">
+                        </div>
+                        <div class="form-group">
+                            <label>預約提前時間（小時）</label>
+                            <input type="number" value="24">
+                        </div>
+                        <div class="form-group">
+                            <label>取消預約時間（小時）</label>
+                            <input type="number" value="2">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" checked>
+                                <span>啟用郵件通知</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox">
+                                <span>啟用簡訊通知</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">儲存設定</button>
+                    </form>
                 </div>
             </div>
         </section>
 
-        <!-- 預算管理頁面 -->
-        <section id="budgets" class="page">
-            <div class="page-header">
-                <h1><i class="fas fa-piggy-bank"></i> 預算管理</h1>
-                <button class="btn btn-primary" onclick="showModal('addBudget')">
-                    <i class="fas fa-plus"></i> 新增預算
-                </button>
-            </div>
+        <!-- 登入頁面 -->
+        <section id="login" class="page">
+            <div class="login-container">
+                <div class="login-form">
+                    <div class="login-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h2>登入系統</h2>
+                        <p>請輸入您的帳號和密碼</p>
+                    </div>
+                    
+                    <form class="login-form-content">
+                        <div class="form-group">
+                            <label>電子郵件</label>
+                            <input type="email" placeholder="請輸入電子郵件" value="admin@ordersys.com">
+                        </div>
+                        <div class="form-group">
+                            <label>密碼</label>
+                            <input type="password" placeholder="請輸入密碼" value="admin123">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox">
+                                <span>記住我</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">登入</button>
+                    </form>
 
-            <div class="budgets-list">
-                <div class="budget-item">
-                    <div class="budget-header">
-                        <div class="budget-icon">
-                            <i class="fas fa-utensils"></i>
+                    <div class="login-footer">
+                        <p>測試帳號：</p>
+                        <div class="test-accounts">
+                            <div class="account-item">
+                                <strong>管理員：</strong> admin@ordersys.com / admin123
+                            </div>
+                            <div class="account-item">
+                                <strong>客戶：</strong> test@example.com / password123
+                            </div>
                         </div>
-                        <div class="budget-info">
-                            <h4>餐飲預算</h4>
-                            <p>每月預算</p>
-                        </div>
-                    </div>
-                    <div class="budget-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%"></div>
-                        </div>
-                        <div class="budget-amounts">
-                            <span class="spent">已用: NT$ 7,500</span>
-                            <span class="total">預算: NT$ 10,000</span>
-                        </div>
-                    </div>
-                    <div class="budget-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
-                    </div>
-                </div>
-
-                <div class="budget-item">
-                    <div class="budget-header">
-                        <div class="budget-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="budget-info">
-                            <h4>生活用品預算</h4>
-                            <p>每月預算</p>
-                        </div>
-                    </div>
-                    <div class="budget-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 45%"></div>
-                        </div>
-                        <div class="budget-amounts">
-                            <span class="spent">已用: NT$ 1,800</span>
-                            <span class="total">預算: NT$ 4,000</span>
-                        </div>
-                    </div>
-                    <div class="budget-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
-                    </div>
-                </div>
-
-                <div class="budget-item">
-                    <div class="budget-header">
-                        <div class="budget-icon">
-                            <i class="fas fa-car"></i>
-                        </div>
-                        <div class="budget-info">
-                            <h4>交通預算</h4>
-                            <p>每月預算</p>
-                        </div>
-                    </div>
-                    <div class="budget-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 90%"></div>
-                        </div>
-                        <div class="budget-amounts">
-                            <span class="spent">已用: NT$ 2,700</span>
-                            <span class="total">預算: NT$ 3,000</span>
-                        </div>
-                    </div>
-                    <div class="budget-actions">
-                        <button class="btn btn-sm btn-secondary">編輯</button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- 模態框 -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">新增交易</h3>
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="modal-form">
-                    <!-- 表單內容將由 JavaScript 動態生成 -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 腳本 -->
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,587 +1,548 @@
-// 記帳系統 DEMO JavaScript
+// 全域變數
+let currentUser = null;
+let currentPage = 'home';
 
-// 全局變量
-let currentSection = 'dashboard';
-let demoData = {
-    transactions: [
-        {
-            id: 1,
-            type: 'income',
-            description: '薪資收入',
-            amount: 45000,
-            account: '銀行帳戶',
-            category: '薪資',
-            date: '2025-01-15T09:30:00',
-            time: '09:30'
-        },
-        {
-            id: 2,
-            type: 'expense',
-            description: '超市購物',
-            amount: 2350,
-            account: '信用卡',
-            category: '生活用品',
-            date: '2025-01-14T18:45:00',
-            time: '18:45'
-        },
-        {
-            id: 3,
-            type: 'expense',
-            description: '房租',
-            amount: 15000,
-            account: '銀行帳戶',
-            category: '居住',
-            date: '2025-01-10T10:00:00',
-            time: '10:00'
-        },
-        {
-            id: 4,
-            type: 'transfer',
-            description: '轉帳到儲蓄帳戶',
-            amount: 10000,
-            account: '銀行帳戶',
-            category: '轉帳',
-            date: '2025-01-08T14:20:00',
-            time: '14:20'
-        }
-    ],
-    accounts: [
-        {
-            id: 1,
-            name: '銀行帳戶',
-            type: 'bank',
-            balance: 125000,
-            description: '主要銀行帳戶'
-        },
-        {
-            id: 2,
-            name: '信用卡',
-            type: 'credit',
-            balance: 45000,
-            description: '主要信用卡'
-        },
-        {
-            id: 3,
-            name: '儲蓄帳戶',
-            type: 'savings',
-            balance: 50000,
-            description: '定期儲蓄'
-        },
-        {
-            id: 4,
-            name: '現金',
-            type: 'cash',
-            balance: 5000,
-            description: '日常現金'
-        }
-    ],
-    categories: [
-        { id: 1, name: '薪資', type: 'income', color: '#4CAF50' },
-        { id: 2, name: '獎金', type: 'income', color: '#4CAF50' },
-        { id: 3, name: '居住', type: 'expense', color: '#f44336' },
-        { id: 4, name: '餐飲', type: 'expense', color: '#f44336' },
-        { id: 5, name: '生活用品', type: 'expense', color: '#f44336' },
-        { id: 6, name: '交通', type: 'expense', color: '#f44336' }
-    ],
-    budgets: [
-        {
-            id: 1,
-            name: '餐飲預算',
-            category: '餐飲',
-            total: 10000,
-            spent: 7500,
-            period: 'monthly'
-        },
-        {
-            id: 2,
-            name: '生活用品預算',
-            category: '生活用品',
-            total: 4000,
-            spent: 1800,
-            period: 'monthly'
-        },
-        {
-            id: 3,
-            name: '交通預算',
-            category: '交通',
-            total: 3000,
-            spent: 2700,
-            period: 'monthly'
-        }
-    ]
-};
+// DOM 載入完成後初始化
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+});
 
-// 頁面導航功能
-function initNavigation() {
+// 初始化應用程式
+function initializeApp() {
+    setupNavigation();
+    setupEventListeners();
+    setupAnimations();
+    loadDemoData();
+}
+
+// 設置導航功能
+function setupNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
-    const pages = document.querySelectorAll('.page');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
 
+    // 導航連結點擊事件
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const section = link.getAttribute('data-section');
-            showSection(section);
+            const page = this.getAttribute('data-page');
+            showPage(page);
+            
+            // 更新導航狀態
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // 手機版導航切換
+    if (navToggle) {
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    }
+}
+
+// 設置事件監聽器
+function setupEventListeners() {
+    // 後台管理標籤切換
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tab = this.getAttribute('data-tab');
+            switchTab(tab);
+            
+            // 更新標籤狀態
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // 登入表單提交
+    const loginForm = document.querySelector('.login-form-content');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleLogin();
+        });
+    }
+
+    // 系統設定表單提交
+    const settingsForm = document.querySelector('.settings-form form');
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleSettingsSave();
+        });
+    }
+
+    // 搜尋功能
+    const searchInputs = document.querySelectorAll('.search-box input');
+    searchInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            handleSearch(this.value, this.closest('.page').id);
+        });
+    });
+
+    // 日期範圍選擇
+    const dateInputs = document.querySelectorAll('.date-range input');
+    dateInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            handleDateRangeChange();
+        });
+    });
+
+    // 行事曆日期點擊
+    const calendarDays = document.querySelectorAll('.calendar-day');
+    calendarDays.forEach(day => {
+        day.addEventListener('click', function() {
+            selectCalendarDay(this);
         });
     });
 }
 
-function showSection(sectionName) {
+// 設置動畫效果
+function setupAnimations() {
+    // 統計數字動畫
+    animateNumbers();
+    
+    // 卡片懸停效果
+    const cards = document.querySelectorAll('.feature-card, .stat-card, .booking-item, .schedule-item');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// 載入演示數據
+function loadDemoData() {
+    // 模擬載入統計數據
+    setTimeout(() => {
+        updateStats();
+    }, 1000);
+
+    // 模擬載入預約數據
+    setTimeout(() => {
+        updateBookings();
+    }, 1500);
+
+    // 模擬載入排程數據
+    setTimeout(() => {
+        updateSchedules();
+    }, 2000);
+}
+
+// 頁面切換功能
+function showPage(pageId) {
     // 隱藏所有頁面
-    document.querySelectorAll('.page').forEach(page => {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => {
         page.classList.remove('active');
     });
 
-    // 移除所有導航鏈接的活動狀態
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-    });
-
-    // 顯示選中的頁面
-    const targetPage = document.getElementById(sectionName);
+    // 顯示目標頁面
+    const targetPage = document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.add('active');
-    }
-
-    // 設置對應導航鏈接為活動狀態
-    const targetLink = document.querySelector(`[data-section="${sectionName}"]`);
-    if (targetLink) {
-        targetLink.classList.add('active');
-    }
-
-    currentSection = sectionName;
-}
-
-// 模態框功能
-function showModal(type) {
-    const modal = document.getElementById('modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalForm = document.getElementById('modal-form');
-
-    // 根據類型設置標題和表單
-    switch (type) {
-        case 'addTransaction':
-            modalTitle.textContent = '新增交易';
-            modalForm.innerHTML = generateTransactionForm();
-            break;
-        case 'addAccount':
-            modalTitle.textContent = '新增帳戶';
-            modalForm.innerHTML = generateAccountForm();
-            break;
-        case 'addCategory':
-            modalTitle.textContent = '新增分類';
-            modalForm.innerHTML = generateCategoryForm();
-            break;
-        case 'addBudget':
-            modalTitle.textContent = '新增預算';
-            modalForm.innerHTML = generateBudgetForm();
-            break;
-    }
-
-    modal.classList.add('show');
-    modal.style.display = 'flex';
-}
-
-function closeModal() {
-    const modal = document.getElementById('modal');
-    modal.classList.remove('show');
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 300);
-}
-
-// 表單生成函數
-function generateTransactionForm() {
-    return `
-        <form id="transactionForm">
-            <div class="form-group">
-                <label for="transactionType">交易類型 *</label>
-                <select id="transactionType" name="type" required>
-                    <option value="expense">支出</option>
-                    <option value="income">收入</option>
-                    <option value="transfer">轉帳</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="transactionAmount">金額 *</label>
-                <input type="number" id="transactionAmount" name="amount" step="0.01" min="0" required>
-            </div>
-            <div class="form-group">
-                <label for="transactionDescription">描述 *</label>
-                <input type="text" id="transactionDescription" name="description" required>
-            </div>
-            <div class="form-group">
-                <label for="transactionDate">日期時間 *</label>
-                <input type="datetime-local" id="transactionDate" name="date" required>
-            </div>
-            <div class="form-group">
-                <label for="transactionAccount">帳戶 *</label>
-                <select id="transactionAccount" name="account" required>
-                    <option value="">選擇帳戶</option>
-                    <option value="銀行帳戶">銀行帳戶</option>
-                    <option value="信用卡">信用卡</option>
-                    <option value="儲蓄帳戶">儲蓄帳戶</option>
-                    <option value="現金">現金</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="transactionCategory">分類</label>
-                <select id="transactionCategory" name="category">
-                    <option value="">選擇分類（可選）</option>
-                    <option value="薪資">薪資</option>
-                    <option value="獎金">獎金</option>
-                    <option value="居住">居住</option>
-                    <option value="餐飲">餐飲</option>
-                    <option value="生活用品">生活用品</option>
-                    <option value="交通">交通</option>
-                </select>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
-                <button type="submit" class="btn btn-primary">新增交易</button>
-            </div>
-        </form>
-    `;
-}
-
-function generateAccountForm() {
-    return `
-        <form id="accountForm">
-            <div class="form-group">
-                <label for="accountName">帳戶名稱 *</label>
-                <input type="text" id="accountName" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="accountType">帳戶類型 *</label>
-                <select id="accountType" name="type" required>
-                    <option value="bank">銀行帳戶</option>
-                    <option value="credit">信用卡</option>
-                    <option value="savings">儲蓄帳戶</option>
-                    <option value="cash">現金</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="accountBalance">初始餘額</label>
-                <input type="number" id="accountBalance" name="balance" step="0.01" value="0">
-            </div>
-            <div class="form-group">
-                <label for="accountDescription">描述</label>
-                <textarea id="accountDescription" name="description" rows="3"></textarea>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
-                <button type="submit" class="btn btn-primary">新增帳戶</button>
-            </div>
-        </form>
-    `;
-}
-
-function generateCategoryForm() {
-    return `
-        <form id="categoryForm">
-            <div class="form-group">
-                <label for="categoryName">分類名稱 *</label>
-                <input type="text" id="categoryName" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="categoryType">分類類型 *</label>
-                <select id="categoryType" name="type" required>
-                    <option value="income">收入</option>
-                    <option value="expense">支出</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="categoryColor">顏色</label>
-                <input type="color" id="categoryColor" name="color" value="#667eea">
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
-                <button type="submit" class="btn btn-primary">新增分類</button>
-            </div>
-        </form>
-    `;
-}
-
-function generateBudgetForm() {
-    return `
-        <form id="budgetForm">
-            <div class="form-group">
-                <label for="budgetName">預算名稱 *</label>
-                <input type="text" id="budgetName" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="budgetCategory">分類 *</label>
-                <select id="budgetCategory" name="category" required>
-                    <option value="">選擇分類</option>
-                    <option value="餐飲">餐飲</option>
-                    <option value="生活用品">生活用品</option>
-                    <option value="交通">交通</option>
-                    <option value="居住">居住</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="budgetAmount">預算金額 *</label>
-                <input type="number" id="budgetAmount" name="amount" step="0.01" min="0" required>
-            </div>
-            <div class="form-group">
-                <label for="budgetPeriod">預算週期 *</label>
-                <select id="budgetPeriod" name="period" required>
-                    <option value="monthly">每月</option>
-                    <option value="quarterly">每季</option>
-                    <option value="yearly">每年</option>
-                </select>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
-                <button type="submit" class="btn btn-primary">新增預算</button>
-            </div>
-        </form>
-    `;
-}
-
-// 表單提交處理
-function initFormHandlers() {
-    // 模態框點擊外部關閉
-    document.getElementById('modal').addEventListener('click', (e) => {
-        if (e.target.id === 'modal') {
-            closeModal();
-        }
-    });
-
-    // 表單提交事件委託
-    document.addEventListener('submit', (e) => {
-        e.preventDefault();
+        currentPage = pageId;
         
-        if (e.target.id === 'transactionForm') {
-            handleTransactionSubmit(e.target);
-        } else if (e.target.id === 'accountForm') {
-            handleAccountSubmit(e.target);
-        } else if (e.target.id === 'categoryForm') {
-            handleCategorySubmit(e.target);
-        } else if (e.target.id === 'budgetForm') {
-            handleBudgetSubmit(e.target);
+        // 頁面特定初始化
+        switch(pageId) {
+            case 'bookings':
+                initializeBookingsPage();
+                break;
+            case 'schedules':
+                initializeSchedulesPage();
+                break;
+            case 'admin':
+                initializeAdminPage();
+                break;
+            case 'login':
+                initializeLoginPage();
+                break;
+        }
+    }
+}
+
+// 標籤切換功能
+function switchTab(tabId) {
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
+}
+
+// 登入處理
+function handleLogin() {
+    const email = document.querySelector('input[type="email"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+
+    // 模擬登入驗證
+    if (email && password) {
+        // 根據不同帳號設定用戶角色
+        let userRole = 'CUSTOMER';
+        if (email.includes('admin')) {
+            userRole = 'ADMIN';
+        } else if (email.includes('staff')) {
+            userRole = 'STAFF';
+        }
+
+        currentUser = {
+            email: email,
+            role: userRole,
+            name: email.split('@')[0]
+        };
+
+        showNotification('登入成功！', 'success');
+        
+        // 根據角色跳轉到相應頁面
+        setTimeout(() => {
+            if (userRole === 'ADMIN' || userRole === 'STAFF') {
+                showPage('admin');
+            } else {
+                showPage('bookings');
+            }
+        }, 1000);
+    } else {
+        showNotification('請輸入完整的登入資訊', 'error');
+    }
+}
+
+// 系統設定儲存
+function handleSettingsSave() {
+    showNotification('設定已儲存！', 'success');
+}
+
+// 搜尋處理
+function handleSearch(query, pageId) {
+    console.log(`在 ${pageId} 頁面搜尋: ${query}`);
+    // 這裡可以實現實際的搜尋邏輯
+}
+
+// 日期範圍變更處理
+function handleDateRangeChange() {
+    const startDate = document.querySelector('.date-range input[type="date"]:first-of-type').value;
+    const endDate = document.querySelector('.date-range input[type="date"]:last-of-type').value;
+    
+    if (startDate && endDate) {
+        console.log(`日期範圍: ${startDate} 至 ${endDate}`);
+        // 這裡可以實現根據日期範圍載入數據的邏輯
+    }
+}
+
+// 行事曆日期選擇
+function selectCalendarDay(dayElement) {
+    // 移除其他日期的 active 類別
+    const allDays = document.querySelectorAll('.calendar-day');
+    allDays.forEach(day => day.classList.remove('active'));
+    
+    // 為選中的日期添加 active 類別
+    dayElement.classList.add('active');
+    
+    // 這裡可以實現根據選中日期載入相應數據的邏輯
+    console.log(`選中日期: ${dayElement.textContent}`);
+}
+
+// 數字動畫
+function animateNumbers() {
+    const numberElements = document.querySelectorAll('.stat-number, .stat-content h3');
+    
+    numberElements.forEach(element => {
+        const finalValue = element.textContent;
+        const numericValue = parseFloat(finalValue.replace(/[^\d.]/g, ''));
+        
+        if (!isNaN(numericValue)) {
+            animateNumber(element, 0, numericValue, 2000, finalValue);
         }
     });
 }
 
-function handleTransactionSubmit(form) {
-    const formData = new FormData(form);
-    const transaction = {
-        id: Date.now(),
-        type: formData.get('type'),
-        amount: parseFloat(formData.get('amount')),
-        description: formData.get('description'),
-        date: formData.get('date'),
-        account: formData.get('account'),
-        category: formData.get('category') || '未分類'
-    };
-
-    demoData.transactions.unshift(transaction);
-    showNotification('交易新增成功！', 'success');
-    closeModal();
-    form.reset();
+// 數字動畫函數
+function animateNumber(element, start, end, duration, originalText) {
+    const startTime = performance.now();
+    const isCurrency = originalText.includes('$');
+    const isPercentage = originalText.includes('%');
+    
+    function updateNumber(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const current = start + (end - start) * progress;
+        let displayValue;
+        
+        if (isCurrency) {
+            displayValue = `$${Math.floor(current).toLocaleString()}`;
+        } else if (isPercentage) {
+            displayValue = `${current.toFixed(1)}%`;
+        } else {
+            displayValue = Math.floor(current).toLocaleString();
+        }
+        
+        element.textContent = displayValue;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateNumber);
+        }
+    }
+    
+    requestAnimationFrame(updateNumber);
 }
 
-function handleAccountSubmit(form) {
-    const formData = new FormData(form);
-    const account = {
-        id: Date.now(),
-        name: formData.get('name'),
-        type: formData.get('type'),
-        balance: parseFloat(formData.get('balance')) || 0,
-        description: formData.get('description') || ''
+// 更新統計數據
+function updateStats() {
+    // 模擬數據更新
+    const stats = {
+        totalUsers: Math.floor(Math.random() * 200) + 100,
+        totalBookings: Math.floor(Math.random() * 2000) + 1000,
+        todayBookings: Math.floor(Math.random() * 50) + 20,
+        totalRevenue: Math.floor(Math.random() * 100000) + 30000
     };
 
-    demoData.accounts.push(account);
-    showNotification('帳戶新增成功！', 'success');
-    closeModal();
-    form.reset();
+    // 更新首頁統計
+    const totalUsersEl = document.getElementById('totalUsers');
+    const totalBookingsEl = document.getElementById('totalBookings');
+    const todayBookingsEl = document.getElementById('todayBookings');
+    const totalRevenueEl = document.getElementById('totalRevenue');
+
+    if (totalUsersEl) totalUsersEl.textContent = stats.totalUsers;
+    if (totalBookingsEl) totalBookingsEl.textContent = stats.totalBookings;
+    if (todayBookingsEl) todayBookingsEl.textContent = stats.todayBookings;
+    if (totalRevenueEl) totalRevenueEl.textContent = `$${stats.totalRevenue.toLocaleString()}`;
 }
 
-function handleCategorySubmit(form) {
-    const formData = new FormData(form);
-    const category = {
-        id: Date.now(),
-        name: formData.get('name'),
-        type: formData.get('type'),
-        color: formData.get('color')
+// 更新預約數據
+function updateBookings() {
+    // 模擬預約狀態更新
+    const bookingItems = document.querySelectorAll('.booking-item');
+    bookingItems.forEach((item, index) => {
+        // 隨機更新一些預約狀態
+        if (Math.random() > 0.7) {
+            const statusElement = item.querySelector('.booking-status');
+            const actions = item.querySelector('.booking-actions');
+            
+            if (statusElement && actions) {
+                // 模擬狀態變更
+                const statuses = ['status-pending', 'status-confirmed', 'status-completed'];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                statusElement.className = `booking-status ${randomStatus}`;
+                statusElement.textContent = getStatusText(randomStatus);
+            }
+        }
+    });
+}
+
+// 更新排程數據
+function updateSchedules() {
+    // 模擬排程更新
+    const scheduleItems = document.querySelectorAll('.schedule-item');
+    scheduleItems.forEach((item, index) => {
+        // 隨機更新一些時段狀態
+        const timeSlots = item.querySelectorAll('.time-slot .status');
+        timeSlots.forEach(slot => {
+            if (Math.random() > 0.8) {
+                const statuses = ['available', 'unavailable', 'break'];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                slot.className = `status ${randomStatus}`;
+                slot.textContent = getScheduleStatusText(randomStatus);
+            }
+        });
+    });
+}
+
+// 獲取狀態文字
+function getStatusText(statusClass) {
+    const statusMap = {
+        'status-pending': '待確認',
+        'status-confirmed': '已確認',
+        'status-completed': '已完成',
+        'status-cancelled': '已取消'
     };
-
-    demoData.categories.push(category);
-    showNotification('分類新增成功！', 'success');
-    closeModal();
-    form.reset();
+    return statusMap[statusClass] || '未知狀態';
 }
 
-function handleBudgetSubmit(form) {
-    const formData = new FormData(form);
-    const budget = {
-        id: Date.now(),
-        name: formData.get('name'),
-        category: formData.get('category'),
-        total: parseFloat(formData.get('amount')),
-        spent: 0,
-        period: formData.get('period')
+// 獲取排程狀態文字
+function getScheduleStatusText(status) {
+    const statusMap = {
+        'available': '可預約',
+        'unavailable': '不可預約',
+        'break': '休息時間'
     };
-
-    demoData.budgets.push(budget);
-    showNotification('預算新增成功！', 'success');
-    closeModal();
-    form.reset();
+    return statusMap[status] || '未知狀態';
 }
 
-// 通知系統
+// 顯示通知
 function showNotification(message, type = 'info') {
+    // 創建通知元素
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.innerHTML = `
         <div class="notification-content">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <i class="fas fa-${getNotificationIcon(type)}"></i>
             <span>${message}</span>
         </div>
     `;
 
-    // 添加通知樣式
+    // 添加樣式
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+        background: ${getNotificationColor(type)};
         color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        z-index: 3000;
-        animation: slideInRight 0.3s ease;
-        max-width: 300px;
+        padding: 1rem 1.5rem;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
     `;
 
+    // 添加到頁面
     document.body.appendChild(notification);
 
-    // 3秒後自動移除
+    // 顯示動畫
     setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    // 自動隱藏
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
         setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
+            document.body.removeChild(notification);
         }, 300);
     }, 3000);
 }
 
-// 篩選功能
-function initFilters() {
-    const filterButtons = document.querySelectorAll('.filter-select, .filter-input');
-    filterButtons.forEach(input => {
-        input.addEventListener('change', applyFilters);
+// 獲取通知圖標
+function getNotificationIcon(type) {
+    const iconMap = {
+        'success': 'check-circle',
+        'error': 'exclamation-circle',
+        'warning': 'exclamation-triangle',
+        'info': 'info-circle'
+    };
+    return iconMap[type] || 'info-circle';
+}
+
+// 獲取通知顏色
+function getNotificationColor(type) {
+    const colorMap = {
+        'success': '#28a745',
+        'error': '#dc3545',
+        'warning': '#ffc107',
+        'info': '#17a2b8'
+    };
+    return colorMap[type] || '#17a2b8';
+}
+
+// 頁面特定初始化函數
+function initializeBookingsPage() {
+    console.log('初始化預約管理頁面');
+    // 這裡可以添加預約頁面特定的初始化邏輯
+}
+
+function initializeSchedulesPage() {
+    console.log('初始化排程管理頁面');
+    // 這裡可以添加排程頁面特定的初始化邏輯
+}
+
+function initializeAdminPage() {
+    console.log('初始化後台管理頁面');
+    // 這裡可以添加後台管理頁面特定的初始化邏輯
+}
+
+function initializeLoginPage() {
+    console.log('初始化登入頁面');
+    // 這裡可以添加登入頁面特定的初始化邏輯
+}
+
+// 工具函數：格式化日期
+function formatDate(date) {
+    return new Date(date).toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
     });
 }
 
-function applyFilters() {
-    // 這裡可以實現篩選邏輯
-    console.log('應用篩選器');
-}
-
-// 動畫效果
-function initAnimations() {
-    // 添加 CSS 動畫
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// 數據統計計算
-function calculateStats() {
-    const transactions = demoData.transactions;
-    let totalIncome = 0;
-    let totalExpense = 0;
-    let totalTransfer = 0;
-
-    transactions.forEach(transaction => {
-        if (transaction.type === 'income') {
-            totalIncome += transaction.amount;
-        } else if (transaction.type === 'expense') {
-            totalExpense += transaction.amount;
-        } else if (transaction.type === 'transfer') {
-            totalTransfer += transaction.amount;
-        }
+// 工具函數：格式化時間
+function formatTime(time) {
+    return new Date(time).toLocaleTimeString('zh-TW', {
+        hour: '2-digit',
+        minute: '2-digit'
     });
+}
 
-    return {
-        totalIncome,
-        totalExpense,
-        totalTransfer,
-        netIncome: totalIncome - totalExpense,
-        transactionCount: transactions.length
+// 工具函數：防抖函數
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
     };
 }
 
-// 更新統計數據顯示
-function updateStatsDisplay() {
-    const stats = calculateStats();
-    
-    // 更新統計卡片
-    const statCards = document.querySelectorAll('.stat-value');
-    if (statCards.length >= 4) {
-        statCards[0].textContent = `NT$ ${stats.totalIncome.toLocaleString()}`;
-        statCards[1].textContent = `NT$ ${stats.totalExpense.toLocaleString()}`;
-        statCards[2].textContent = `NT$ ${stats.netIncome.toLocaleString()}`;
-        statCards[3].textContent = stats.transactionCount.toString();
-    }
+// 工具函數：節流函數
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
 }
 
-// 模擬數據加載
-function loadDemoData() {
-    // 設置當前日期時間為默認值
-    const now = new Date();
-    const dateTimeInput = document.getElementById('transactionDate');
-    if (dateTimeInput) {
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        dateTimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
-    }
+// 模擬 API 調用
+function mockApiCall(endpoint, data = {}) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            // 模擬不同的 API 回應
+            let response;
+            switch(endpoint) {
+                case '/api/bookings':
+                    response = { bookings: [], total: 0 };
+                    break;
+                case '/api/schedules':
+                    response = { schedules: [], total: 0 };
+                    break;
+                case '/api/users':
+                    response = { users: [], total: 0 };
+                    break;
+                default:
+                    response = { success: true };
+            }
+            resolve(response);
+        }, Math.random() * 1000 + 500); // 模擬網路延遲
+    });
 }
 
-// 頁面初始化
-function init() {
-    console.log('記帳系統 DEMO 初始化中...');
-    
-    // 初始化各個功能模塊
-    initNavigation();
-    initFormHandlers();
-    initFilters();
-    initAnimations();
-    
-    // 更新統計數據
-    updateStatsDisplay();
-    
-    // 設置默認日期時間
-    setTimeout(loadDemoData, 100);
-    
-    console.log('記帳系統 DEMO 初始化完成！');
-    showNotification('歡迎使用記帳系統 DEMO！', 'success');
+// 錯誤處理
+function handleError(error, context = '') {
+    console.error(`錯誤 ${context}:`, error);
+    showNotification(`發生錯誤: ${error.message}`, 'error');
 }
 
-// 頁面加載完成後初始化
-document.addEventListener('DOMContentLoaded', init);
-
-// 導出全局函數供 HTML 調用
-window.showModal = showModal;
-window.closeModal = closeModal;
-window.showSection = showSection;
+// 導出函數供全域使用
+window.showPage = showPage;
+window.switchTab = switchTab;
+window.showNotification = showNotification;
