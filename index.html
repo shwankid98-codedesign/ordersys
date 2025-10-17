@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記帳系統 DEMO - 財務管理平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span>記帳系統 DEMO</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> 儀表板
+                </a>
+                <a href="#transactions" class="nav-link" data-section="transactions">
+                    <i class="fas fa-exchange-alt"></i> 交易記錄
+                </a>
+                <a href="#accounts" class="nav-link" data-section="accounts">
+                    <i class="fas fa-wallet"></i> 帳戶管理
+                </a>
+                <a href="#categories" class="nav-link" data-section="categories">
+                    <i class="fas fa-tags"></i> 分類管理
+                </a>
+                <a href="#reports" class="nav-link" data-section="reports">
+                    <i class="fas fa-chart-bar"></i> 報表分析
+                </a>
+                <a href="#budgets" class="nav-link" data-section="budgets">
+                    <i class="fas fa-piggy-bank"></i> 預算管理
+                </a>
+            </div>
+            <div class="nav-user">
+                <span class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span>DEMO 用戶</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+        <!-- 儀表板頁面 -->
+        <section id="dashboard" class="page active">
+            <div class="page-header">
+                <h1><i class="fas fa-tachometer-alt"></i> 財務儀表板</h1>
+                <p>掌控您的財務狀況，實現財務自由</p>
+            </div>
+
+            <!-- 財務統計卡片 -->
+            <div class="stats-grid">
+                <div class="stat-card income">
+                    <div class="stat-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>總收入</h3>
+                        <p class="stat-value">NT$ 125,000</p>
+                        <span class="stat-change positive">+12.5%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card expense">
+                    <div class="stat-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>總支出</h3>
+                        <p class="stat-value">NT$ 78,500</p>
+                        <span class="stat-change negative">+8.2%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card balance">
+                    <div class="stat-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>淨收入</h3>
+                        <p class="stat-value">NT$ 46,500</p>
+                        <span class="stat-change positive">+15.3%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card transactions">
+                    <div class="stat-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>交易筆數</h3>
+                        <p class="stat-value">156</p>
+                        <span class="stat-change positive">+23</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近交易 -->
+            <div class="dashboard-section">
+                <h2><i class="fas fa-clock"></i> 最近交易</h2>
+                <div class="recent-transactions">
+                    <div class="transaction-item">
+                        <div class="transaction-icon income">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>薪資收入</h4>
+                            <p>銀行帳戶 • 2025/01/15 09:30</p>
+                        </div>
+                        <div class="transaction-amount positive">+NT$ 45,000</div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-icon expense">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>超市購物</h4>
+                            <p>信用卡 • 2025/01/14 18:45</p>
+                        </div>
+                        <div class="transaction-amount negative">-NT$ 2,350</div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-icon expense">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>房租</h4>
+                            <p>銀行帳戶 • 2025/01/10 10:00</p>
+                        </div>
+                        <div class="transaction-amount negative">-NT$ 15,000</div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-icon transfer">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>轉帳到儲蓄帳戶</h4>
+                            <p>銀行帳戶 → 儲蓄帳戶 • 2025/01/08 14:20</p>
+                        </div>
+                        <div class="transaction-amount neutral">NT$ 10,000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快速操作 -->
+            <div class="dashboard-section">
+                <h2><i class="fas fa-bolt"></i> 快速操作</h2>
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="showModal('addTransaction')">
+                        <i class="fas fa-plus"></i>
+                        <span>新增交易</span>
+                    </button>
+                    <button class="action-btn" onclick="showModal('addAccount')">
+                        <i class="fas fa-wallet"></i>
+                        <span>新增帳戶</span>
+                    </button>
+                    <button class="action-btn" onclick="showModal('addCategory')">
+                        <i class="fas fa-tag"></i>
+                        <span>新增分類</span>
+                    </button>
+                    <button class="action-btn" onclick="showModal('addBudget')">
+                        <i class="fas fa-piggy-bank"></i>
+                        <span>設定預算</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 交易記錄頁面 -->
+        <section id="transactions" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-exchange-alt"></i> 交易記錄</h1>
+                <button class="btn btn-primary" onclick="showModal('addTransaction')">
+                    <i class="fas fa-plus"></i> 新增交易
+                </button>
+            </div>
+
+            <!-- 篩選器 -->
+            <div class="filters">
+                <select class="filter-select">
+                    <option value="">所有類型</option>
+                    <option value="income">收入</option>
+                    <option value="expense">支出</option>
+                    <option value="transfer">轉帳</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">所有帳戶</option>
+                    <option value="bank">銀行帳戶</option>
+                    <option value="credit">信用卡</option>
+                    <option value="cash">現金</option>
+                </select>
+                <input type="date" class="filter-input" placeholder="開始日期">
+                <input type="date" class="filter-input" placeholder="結束日期">
+                <button class="btn btn-secondary">篩選</button>
+            </div>
+
+            <!-- 交易列表 -->
+            <div class="transactions-list">
+                <div class="transaction-row">
+                    <div class="transaction-type income">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <h4>薪資收入</h4>
+                        <p>銀行帳戶 • 薪資</p>
+                    </div>
+                    <div class="transaction-date">2025/01/15</div>
+                    <div class="transaction-amount positive">+NT$ 45,000</div>
+                    <div class="transaction-actions">
+                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="transaction-row">
+                    <div class="transaction-type expense">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <h4>超市購物</h4>
+                        <p>信用卡 • 生活用品</p>
+                    </div>
+                    <div class="transaction-date">2025/01/14</div>
+                    <div class="transaction-amount negative">-NT$ 2,350</div>
+                    <div class="transaction-actions">
+                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="transaction-row">
+                    <div class="transaction-type expense">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <h4>房租</h4>
+                        <p>銀行帳戶 • 居住</p>
+                    </div>
+                    <div class="transaction-date">2025/01/10</div>
+                    <div class="transaction-amount negative">-NT$ 15,000</div>
+                    <div class="transaction-actions">
+                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="transaction-row">
+                    <div class="transaction-type transfer">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="transaction-info">
+                        <h4>轉帳到儲蓄帳戶</h4>
+                        <p>銀行帳戶 → 儲蓄帳戶</p>
+                    </div>
+                    <div class="transaction-date">2025/01/08</div>
+                    <div class="transaction-amount neutral">NT$ 10,000</div>
+                    <div class="transaction-actions">
+                        <button class="btn-icon" title="編輯"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon" title="刪除"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 帳戶管理頁面 -->
+        <section id="accounts" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-wallet"></i> 帳戶管理</h1>
+                <button class="btn btn-primary" onclick="showModal('addAccount')">
+                    <i class="fas fa-plus"></i> 新增帳戶
+                </button>
+            </div>
+
+            <div class="accounts-grid">
+                <div class="account-card">
+                    <div class="account-header">
+                        <div class="account-icon bank">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="account-info">
+                            <h3>銀行帳戶</h3>
+                            <p>主要銀行帳戶</p>
+                        </div>
+                    </div>
+                    <div class="account-balance">
+                        <span class="balance-label">餘額</span>
+                        <span class="balance-amount">NT$ 125,000</span>
+                    </div>
+                    <div class="account-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    </div>
+                </div>
+
+                <div class="account-card">
+                    <div class="account-header">
+                        <div class="account-icon credit">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="account-info">
+                            <h3>信用卡</h3>
+                            <p>主要信用卡</p>
+                        </div>
+                    </div>
+                    <div class="account-balance">
+                        <span class="balance-label">可用額度</span>
+                        <span class="balance-amount">NT$ 45,000</span>
+                    </div>
+                    <div class="account-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    </div>
+                </div>
+
+                <div class="account-card">
+                    <div class="account-header">
+                        <div class="account-icon savings">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="account-info">
+                            <h3>儲蓄帳戶</h3>
+                            <p>定期儲蓄</p>
+                        </div>
+                    </div>
+                    <div class="account-balance">
+                        <span class="balance-label">餘額</span>
+                        <span class="balance-amount">NT$ 50,000</span>
+                    </div>
+                    <div class="account-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    </div>
+                </div>
+
+                <div class="account-card">
+                    <div class="account-header">
+                        <div class="account-icon cash">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="account-info">
+                            <h3>現金</h3>
+                            <p>日常現金</p>
+                        </div>
+                    </div>
+                    <div class="account-balance">
+                        <span class="balance-label">餘額</span>
+                        <span class="balance-amount">NT$ 5,000</span>
+                    </div>
+                    <div class="account-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                        <button class="btn btn-sm btn-primary">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分類管理頁面 -->
+        <section id="categories" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-tags"></i> 分類管理</h1>
+                <button class="btn btn-primary" onclick="showModal('addCategory')">
+                    <i class="fas fa-plus"></i> 新增分類
+                </button>
+            </div>
+
+            <div class="categories-section">
+                <h3>收入分類</h3>
+                <div class="categories-grid">
+                    <div class="category-card income">
+                        <div class="category-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>薪資</h4>
+                            <p>15 筆交易</p>
+                        </div>
+                        <div class="category-amount">NT$ 45,000</div>
+                    </div>
+
+                    <div class="category-card income">
+                        <div class="category-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>獎金</h4>
+                            <p>3 筆交易</p>
+                        </div>
+                        <div class="category-amount">NT$ 12,000</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="categories-section">
+                <h3>支出分類</h3>
+                <div class="categories-grid">
+                    <div class="category-card expense">
+                        <div class="category-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>居住</h4>
+                            <p>8 筆交易</p>
+                        </div>
+                        <div class="category-amount">NT$ 15,000</div>
+                    </div>
+
+                    <div class="category-card expense">
+                        <div class="category-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>餐飲</h4>
+                            <p>25 筆交易</p>
+                        </div>
+                        <div class="category-amount">NT$ 8,500</div>
+                    </div>
+
+                    <div class="category-card expense">
+                        <div class="category-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>生活用品</h4>
+                            <p>12 筆交易</p>
+                        </div>
+                        <div class="category-amount">NT$ 3,200</div>
+                    </div>
+
+                    <div class="category-card expense">
+                        <div class="category-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="category-info">
+                            <h4>交通</h4>
+                            <p>18 筆交易</p>
+                        </div>
+                        <div class="category-amount">NT$ 2,800</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 報表分析頁面 -->
+        <section id="reports" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-chart-bar"></i> 報表分析</h1>
+                <div class="report-controls">
+                    <select class="filter-select">
+                        <option value="month">本月</option>
+                        <option value="quarter">本季</option>
+                        <option value="year">本年</option>
+                    </select>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i> 匯出報表
+                    </button>
+                </div>
+            </div>
+
+            <div class="reports-grid">
+                <div class="report-card">
+                    <h3>收支趨勢</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>收支趨勢圖表</p>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <h3>支出分類分析</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>支出分類圓餅圖</p>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <h3>月度比較</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>月度比較柱狀圖</p>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <h3>帳戶餘額變化</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-area"></i>
+                        <p>帳戶餘額變化圖</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 預算管理頁面 -->
+        <section id="budgets" class="page">
+            <div class="page-header">
+                <h1><i class="fas fa-piggy-bank"></i> 預算管理</h1>
+                <button class="btn btn-primary" onclick="showModal('addBudget')">
+                    <i class="fas fa-plus"></i> 新增預算
+                </button>
+            </div>
+
+            <div class="budgets-list">
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <div class="budget-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="budget-info">
+                            <h4>餐飲預算</h4>
+                            <p>每月預算</p>
+                        </div>
+                    </div>
+                    <div class="budget-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <div class="budget-amounts">
+                            <span class="spent">已用: NT$ 7,500</span>
+                            <span class="total">預算: NT$ 10,000</span>
+                        </div>
+                    </div>
+                    <div class="budget-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <div class="budget-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="budget-info">
+                            <h4>生活用品預算</h4>
+                            <p>每月預算</p>
+                        </div>
+                    </div>
+                    <div class="budget-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <div class="budget-amounts">
+                            <span class="spent">已用: NT$ 1,800</span>
+                            <span class="total">預算: NT$ 4,000</span>
+                        </div>
+                    </div>
+                    <div class="budget-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                    </div>
+                </div>
+
+                <div class="budget-item">
+                    <div class="budget-header">
+                        <div class="budget-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="budget-info">
+                            <h4>交通預算</h4>
+                            <p>每月預算</p>
+                        </div>
+                    </div>
+                    <div class="budget-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                        <div class="budget-amounts">
+                            <span class="spent">已用: NT$ 2,700</span>
+                            <span class="total">預算: NT$ 3,000</span>
+                        </div>
+                    </div>
+                    <div class="budget-actions">
+                        <button class="btn btn-sm btn-secondary">編輯</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 模態框 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">新增交易</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-form">
+                    <!-- 表單內容將由 JavaScript 動態生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 腳本 -->
+    <script src="script.js"></script>
+</body>
+</html>
